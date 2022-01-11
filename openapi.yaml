@@ -1,0 +1,151 @@
+openapi: 3.0.0
+info:
+  title: Treetracker Region Management API
+  description: API for region management tool to allow Treetracker stakeholders to create and manage regions in geojson format.
+  contact:
+    url: greenstand.org
+    email: info@greenstand.org
+  version: 1.0.0
+servers:
+  - url: https://dev-admin.treetracker.org
+  - url: https://admin.treetracker.org
+paths:
+  /region:
+    description: Region Rescource
+    get: 
+      parameters: 
+      - in: query
+        name: owner_id
+        required: true
+        schema:
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+      responses:
+        200:
+          description: Successful Query Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: string
+                      example: 123e4567-e89b-12d3-a456-426614174000
+                    owner_id:
+                      type: string
+                      example: 123e4567-e89b-12d3-a456-426614174000
+                    name:
+                      type: string
+                      example: Freetown
+                    shape:
+                      type: array
+                      items: 
+                        type: array
+                        items: 
+                          type: array
+                          items: 
+                            type: number
+                      example: [[[[102.0, 2.0], [103.0, 2.0], [103.0, 3.0],[102.0, 3.0], [102.0, 2.0]]],[[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]],[[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]]]
+                    show_on_org_map:
+                      type: boolean
+                      example: true
+                    calculate_statistics:
+                      type: boolean
+                      example: true
+                    created_at: 
+                      type: string
+                      example: "12-31-2021"
+                    updated_at:
+                      type: string
+                      example: "12-31-2021"
+    post:
+      description: Add a new region
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                # id:
+                #   type: string
+                #   example: 123e4567-e89b-12d3-a456-426614174000
+                # owner_id:
+                #   type: string
+                #   example: 123e4567-e89b-12d3-a456-426614174000
+                name:
+                  type: string
+                  example: Freetown
+                shape:
+                  type: array
+                  items: 
+                    type: array
+                    items: 
+                      type: array
+                      items: 
+                        type: number
+                  example: [[[[102.0, 2.0], [103.0, 2.0], [103.0, 3.0],[102.0, 3.0], [102.0, 2.0]]],[[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]],[[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]]]
+                show_on_org_map:
+                  type: boolean
+                  example: true
+                calculate_statistics:
+                  type: boolean
+                  example: true
+      responses:                
+        201:
+          description: Region Successfully Added
+        400:
+          description: Region Could Not Be Added
+  /region{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+    description: Specific Region Rescource
+    put:
+      description: Update a region
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: 123e4567-e89b-12d3-a456-426614174000
+                # owner_id:
+                #   type: string
+                #   example: 123e4567-e89b-12d3-a456-426614174000
+                name:
+                  type: string
+                  example: Freetown
+                shape:
+                  type: array
+                  items: 
+                    type: array
+                    items: 
+                      type: array
+                      items: 
+                        type: number
+                  example: [[[[102.0, 2.0], [103.0, 2.0], [103.0, 3.0],[102.0, 3.0], [102.0, 2.0]]],[[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]],[[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]]]
+                show_on_org_map:
+                  type: boolean
+                  example: true
+                calculate_statistics:
+                  type: boolean
+                  example: true
+      responses:                
+        201:
+          description: Region Successfully Updated
+        400:
+          description: Region Could Not Be Updated
+    delete:
+      description: Delete a Region
+      responses:
+        201:
+          description: Region Successfully Deleted
+        400:
+          description: Region Could Not Be Deleted
+      
